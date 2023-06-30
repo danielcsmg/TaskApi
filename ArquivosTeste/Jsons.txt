@@ -1,0 +1,30 @@
+{
+    "id": "8b399384-9453-47a8-bbfd-906b6d6fc45f",
+    "title": "Hello World 2",
+    "description": "Essa é a terceira task criada",
+    "initDate": "2023-06-19T10:43:18.406Z",
+    "activities": [
+        {
+            "title": "Fazer Algo",
+            "initDate": "2023-06-20T13:34:04.918Z",
+            "conclusionDate": "2023-06-21T13:34:04.918Z"
+        },
+        {
+            "title": "Fazer Algo",
+            "initDate": "2023-06-20T13:34:04.918Z",
+            "conclusionDate": "2023-06-21T13:34:04.918Z"
+        },
+        {
+            "title": "Fazer Algo",
+            "initDate": "2023-06-20T13:34:04.918Z",
+            "conclusionDate": "2023-06-21T13:34:04.918Z"
+        }
+    ],
+    "categories": [
+        {
+            "id": 1,
+            "name": "Atividade"
+        }
+    ],
+    "status": "Concluído"
+}
