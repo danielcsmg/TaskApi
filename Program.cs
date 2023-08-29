@@ -1,4 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TaskApi.Auth.Data;
+using TaskApi.Auth.Data.Daos;
+using TaskApi.Auth.Data.Daos.InterfacesDao;
+using TaskApi.Auth.Models;
+using TaskApi.Auth.Services;
 using TaskApi.Data;
 using TaskApi.Data.Daos;
 using TaskApi.Data.Daos.Interfaces;
@@ -14,13 +20,22 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-var taskDbConnection = builder.Configuration.GetConnectionString("TaskDbConnection");
+var connectionString = builder.Configuration["ConnectionStrings:TaskDbConnection"];
+var userConnectionString = builder.Configuration["ConnectionStrings:UserDbConnection"];
+
+builder.Services.AddDbContext<UserDbContext>(opts =>
+    opts.UseMySql(userConnectionString, ServerVersion.AutoDetect(userConnectionString)));
+builder.Services
+    .AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<UserDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddDbContext<WorkTaskContext>(opts =>
-    opts.UseMySql(taskDbConnection,
-    ServerVersion.AutoDetect(taskDbConnection)));
+    opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddScoped<WorkTaskService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddTransient<IUserDao, UserDao>(); // Essa função é responsável pela injeção de dependência
 builder.Services.AddTransient<IWorkTaskDao, WorkTaskDao>(); // Essa função é responsável pela injeção de dependência
 builder.Services.AddTransient<IWorkActivityDao, WorkActivityDao>(); // Essa função é responsável pela injeção de dependência
 builder.Services.AddTransient<ICategoryDao, CategoryDao>(); // Essa função é responsável pela injeção de dependência

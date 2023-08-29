@@ -21,21 +21,10 @@ public class WorkTaskService
     public void AddWorkTask(CreateWorkTaskDto createWorkTask)
     {
         var workTask = _mapper.Map<WorkTask>(createWorkTask);
-        var workActivities = workTask.Activities;
 
         if (workTask is not null)
         {
-            workTask.Activities = null;
             _workTaskDao.AddWorkTask(workTask);
-        }
-
-        if (workActivities is not null)
-        {
-            foreach (var activity in workActivities)
-            {
-                activity.WorkTaskId = workTask.Id;
-            }
-            _workActivityDao.AddWorkActivities(workActivities);
         }
     }
 

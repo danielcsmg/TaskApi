@@ -45,7 +45,7 @@ public class WorkTaskController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateWorkTask([FromRoute] string id,[FromBody] UpdateWorkTaskDto taskDto)
+    public IActionResult UpdateWorkTask([FromRoute] string id, [FromBody] UpdateWorkTaskDto taskDto)
     {
         _workTaskService.UpdateWorkTask(id, taskDto);
         return NoContent();

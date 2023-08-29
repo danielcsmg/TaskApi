@@ -15,7 +15,8 @@ public class WorkTaskDao : IWorkTaskDao
 
     public WorkTask AddWorkTask(WorkTask task)
     {
-        _context.Add(task);
+        _context.WorkTasks.Add(task);       
+
         _context.SaveChanges();
         return task;
     }

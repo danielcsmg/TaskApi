@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using AutoMapper;
+﻿using AutoMapper;
 using TaskApi.Data.Daos.Interfaces;
 using TaskApi.Data.Dtos;
 using TaskApi.Models;
@@ -53,14 +51,7 @@ public class WorkActivityDao : IWorkActivityDao
     {
         try
         {
-            var workActivity = _context.WorkActivities
-                .Where(a => a.Id.ToString() == id)
-                .FirstOrDefault();
-
-            if (workActivity == null)
-            {
-                throw new NullReferenceException("Atividade não encontrada!");
-            }
+            WorkActivity? workActivity = GetWorkActivityById(id);
 
             _context.Remove(workActivity);
             _context.SaveChanges();
@@ -75,6 +66,19 @@ public class WorkActivityDao : IWorkActivityDao
         {
             throw new ApplicationException(ex.Message);
         }
+    }
+
+    private WorkActivity? GetWorkActivityById(string id)
+    {
+        var workActivity = _context.WorkActivities
+            .Where(a => a.Id.ToString() == id)
+            .FirstOrDefault();
+
+        if (workActivity == null)
+        {
+            throw new NullReferenceException("Atividade não encontrada!");
+        }
+        return workActivity;
     }
 
     public ReadWorkActivityDto Update(string id, UpdateWorkActivityDto activityDto)
